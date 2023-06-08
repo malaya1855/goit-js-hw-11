@@ -1,10 +1,11 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+ 
+import { pageGallery } from './index';
 
-const photoCard = document.querySelector('.gallery')
 
 export default function renderPhotos(items){
-    const pageGallery = items.map(
+    const photoCard = items.map(
         item => `<div class="photo-card">
         <a class="gallery__link" href="${item.largeImageURL}">
 <img src="${item.webformatURL}" alt="${item.tags}" loading="lazy" />
@@ -29,7 +30,8 @@ export default function renderPhotos(items){
 </div>
 </div>`)
 .join("")
-photoCard.insertAdjacentHTML('beforeend', pageGallery)
-let gallery = new SimpleLightbox('.gallery a', {'captionsData': 'alt', 'captionDelay': 250});
+pageGallery.insertAdjacentHTML('beforeend', photoCard)
+let gallery = new SimpleLightbox('.gallery a');
 gallery.refresh(); 
+
     }

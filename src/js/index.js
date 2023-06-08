@@ -33,43 +33,27 @@ function onSearchPhoto(e){
 .catch (erorr => Report.failure("Searching Failure", "Sorry, there are no images matching your search query. Please try again.", "Okay"))
 }
 
-// loadMoreBtn.addEventListener('click', onLoadMorePhotos)
-
-// function onLoadMorePhotos (){
-//     newApiService.loadMorePhotos()
-//     .then (items => {
-//         renderPhotos(items);
-//         newApiService.page += 1;
-//         scrollSmooth();
-//     })
-//     .catch (erorr => {
-//         Notify.failure("We're sorry, but you've reached the end of search results.")
-//     loadMoreBtn.classList.add('visually-hidden')  
-// })
-    
-// }
-// function scrollSmooth () { 
-// const { height: cardHeight } = pageGallery.firstElementChild.getBoundingClientRect();
-
-// window.scrollBy({
-//   top: cardHeight * 2,
-//   behavior: "smooth",
-// });
-// }
-
-window.addEventListener("scroll", onLoadMorePhotos)
+loadMoreBtn.addEventListener('click', onLoadMorePhotos)
 
 function onLoadMorePhotos (){
-        newApiService.loadMorePhotos()
-        .then (items => {
-    const contentHeight = pageGallery.offsetHeight; 
-    const yOffset       = window.pageYOffset;
-    const window_height = window.innerHeight;  
-    const y             = yOffset + window_height;y
-    if(y <= contentHeight) {renderPhotos(items);
-    newApiService.page += 1;
-    }
-        })
-        .catch (erorr => {
-            Notify.failure("We're sorry, but you've reached the end of search results.")})  
+    newApiService.loadMorePhotos()
+    .then (items => {
+        renderPhotos(items);
+        newApiService.page += 1;
+        scrollSmooth();
+    })
+    .catch (erorr => {
+        Notify.failure("We're sorry, but you've reached the end of search results.")
+    loadMoreBtn.classList.add('visually-hidden')  
+})
+    
 }
+function scrollSmooth () { 
+const { height: cardHeight } = pageGallery.firstElementChild.getBoundingClientRect();
+
+window.scrollBy({
+  top: cardHeight * 2,
+  behavior: "smooth",
+});
+}
+

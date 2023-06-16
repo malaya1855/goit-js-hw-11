@@ -1,5 +1,7 @@
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 import renderPhotos from './render-photo';
 import NewApiService from './photo-api';
@@ -7,8 +9,9 @@ import NewApiService from './photo-api';
 const searchForm = document.querySelector('.search-form')
 const searchQuery = document.querySelector("input[name='searchQuery']")
 const loadMoreBtn = document.querySelector('.load-more')
-const photoCard = document.querySelector('.photo-card')
+
 export const pageGallery = document.querySelector('.gallery')
+export const lightbox = new SimpleLightbox('.gallery a');
 
 const newApiService = new NewApiService()
 
@@ -27,15 +30,16 @@ function onSearchPhoto(e){
     renderPhotos(items);
     Notify.success(`Hooray! We found ${newApiService.totalPhotos} images.`);
     newApiService.page += 1;
-    console.log(newApiService.page);
     loadMoreBtn.classList.remove('visually-hidden');
 })
-.catch (erorr => Report.failure("Searching Failure", "Sorry, there are no images matching your search query. Please try again.", "Okay"))
+.catch (error => {Report.failure("Searching Failure", "Sorry, there are no images matching your search query. Please try again.", "Okay"),
+console.log(error)})
 }
 
 loadMoreBtn.addEventListener('click', onLoadMorePhotos)
 
 function onLoadMorePhotos (){
+
     newApiService.loadMorePhotos()
     .then (items => {
         renderPhotos(items);
